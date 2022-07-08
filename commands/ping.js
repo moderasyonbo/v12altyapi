@@ -1,12 +1,19 @@
 const Discord = require("discord.js"),
 client = new Discord.Client();
 
-module.exports.run = async (client, message, args) => {
+exports.run = async (client, message, args) => {
 message.channel.send('Pong!')
 };
 
-exports.config = {
-  name: "ping",
-  guildOnly: true,
-  aliases: [],
+exports.conf = {
+  enabled: true,
+  guildOnly: false,
+  aliases: ["gç-ayarla"],
+  permLevel: 0
+};
+
+exports.help = {
+  name: "resimlihgbb",
+  description: "Giriş Çıkış Kanalını Ayarlar.",
+  usage: "gç-ayarla <#kanal>"
 };
