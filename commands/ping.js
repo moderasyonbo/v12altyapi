@@ -8,12 +8,12 @@ message.channel.send('Pong!')
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: ["gç-ayarla"],
+  aliases: [],
   permLevel: 0
 };
 
 exports.help = {
-  name: "resimlihgbb",
-  description: "Giriş Çıkış Kanalını Ayarlar.",
-  usage: "gç-ayarla <#kanal>"
+  name: "ping",
+  description: ".",
+  usage: ">"
 };
