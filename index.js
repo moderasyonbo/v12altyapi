@@ -2,22 +2,29 @@ const Discord = require("discord.js")
 const client = new Discord.Client();      
 const config = require("./config.js")    
 const fs = require("fs");                
-require('./util/Loader.js')(client);  
 
-client.commands = new Discord.Collection(); 
-client.aliases = new Discord.Collection();  
-fs.readdir('./commands/', (err, files) => { 
-  if (err) console.error(err);             
-  console.log(`${files.length} komut yüklenecek.`); 
-  files.forEach(f => {                     
-    let props = require(`./commands/${f}`);  
-    console.log(`${props.config.name} komutu yüklendi.`);  
-    console.log(`Piece <3 Serendia Squad`)     
-    client.commands.set(props.config.name, props); 
-    props.config.aliases.forEach(alias => {        
-      client.aliases.set(alias, props.config.name);  
-    });
+client.commands = new Discord.Collection();
+const fs = require('fs');
+
+fs.readdir("./commands/", (err, files) => {
+  if (err) return console.error(err);
+  files.forEach((file) => {
+    if (!file.endsWith(".js")) return;
+    let cmd = require(`./commands/${file}`);
+    let cmdFileName = file.split(".")[0];
+    console.log(`Komut Yükleme Çalışıyor: ${cmdFileName}`);
+    client.commands.set(cmd.help.name, cmd);
   });
-})
+});
+
+fs.readdir("./events/", (err, files) => {
+  if (err) return console.error(err);
+  files.forEach((file) => {
+    const event = require(`./events/${file}`);
+    let eventName = file.split(".")[0];
+    console.log(`Etkinlik Yükleme Çalışıyor: ${eventName}`);
+    client.on(eventName, event.bind(null, client));
+  });
+});
 
 client.login(config.token)
